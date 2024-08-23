@@ -4,11 +4,22 @@ This is Part 2 of the Lightsail Web Server configuration using Terraform. You ca
 
 From the basic configuration, we will add the following features:
 
-1. Using variables when creating different components.
-2. Create a web user group, role and user.
-3. Create a key pair for SSH access
-4. Configure DNS
-5. Configure snapshot for data recovery
+#### 1. Using variables when creating different components.
+#### 2. Create a web user group, role and user.
+#### 3. Create a key pair for SSH access
+#### 4. Configure AWS Route 53 and SSL
+#### 5. Configure snapshot for data recovery
+
+We will now proceed with the configuration. We will briefly explain code as we go along.
+
+### 1. Using variables when creating different components.
+
+
+
+### 2. Create a web user group, role and user.
+### 3. Create a key pair for SSH access
+### 4. Configure AWS Route 53 and SSL
+### 5. Configure snapshot for data recovery
 
 
 
