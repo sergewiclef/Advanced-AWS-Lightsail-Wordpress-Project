@@ -12,6 +12,16 @@ We will now proceed with the configuration. We will briefly explain code as we g
 
 ### 1. Using variables when creating different components.
 
+Variables in Terraform are used to store and manage values that are frequently used or need to be changed easily. This can make your Terraform code more:
+
+  1. Reusable: Variables allow you to define values once and use them multiple times throughout your code, reducing redundancy and improving code maintainability.
+
+  2. Flexible: By using variables, you can easily modify values without having to edit your code directly. This makes it easier to experiment with different configurations and adapt to changing requirements.
+
+  3. Secure: Variables can be used to store sensitive information, such as passwords or API keys, in a secure way. Terraform provides mechanisms to encrypt and manage sensitive values.
+
+  4. Modular: Variables can be used to create reusable modules that can be shared and reused across different projects. This can help you standardize your infrastructure and improve efficiency.
+
 We used variables for each component instead of directly defining values in the main.tf file. For example, instead of defining the AWS region in the main.tf as done in Part 1 as per below
 
 ```
@@ -109,7 +119,7 @@ add_on {
             type        = "AutoSnapshot" 
         }
 ```
-The full block code to create the lightsail server and configure snapshot becomes
+We specified the snapshot to be taken automatically everyday at 6am. The full block code to create the lightsail server and configure snapshot becomes
 
 ```
 #create a Lightsail instance
@@ -131,6 +141,11 @@ resource "aws_lightsail_instance" "wordpress_instance" {
 }
 ```
 
+### Summary
+
+In this post, we first demostrated how to use variables in Terraform to store and manage values that are frequently used or need to be changed easily. We then created the necessary components to register our domain with Route 53, which is the AWS DNS service. Finally, we configured automatic snapshots to protect our website content. 
+
+I hope you enjoyed reading this post! 
  
 
 
