@@ -101,8 +101,35 @@ Note that the domain needs to be registered to be able to access the website usi
 
 ### 3. Configure snapshot for data recovery
 
+Creating snapshot of the Lightsail server is by simply adding the code below to the Lightsail instance creation block code 
+```
+add_on {
+          snapshot_time = "06:00" 
+          status        = "Enabled" 
+            type        = "AutoSnapshot" 
+        }
+```
+The full block code to create the lightsail server and configure snapshot becomes
 
+```
+#create a Lightsail instance
+resource "aws_lightsail_instance" "wordpress_instance" {
+  name = var.instance
+  blueprint_id = var.blueprint_id
+  availability_zone = var.availability_zone
+  bundle_id = var.bundle_id
 
+  tags = {
+    Environment = "My Personal Blog"
+    
+  }
+   add_on {
+          snapshot_time = "06:00" 
+          status        = "Enabled" 
+            type        = "AutoSnapshot" 
+        }
+}
+```
 
  
 
