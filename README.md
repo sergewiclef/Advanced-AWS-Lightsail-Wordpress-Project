@@ -14,20 +14,24 @@ We will now proceed with the configuration. We will briefly explain code as we g
 
 We used variables for each component instead of directly defining values in the main.tf file. For example, instead of defining the AWS region in the main.tf as done in Part 1 as per below
 
-`provider "aws" {
+```
+provider "aws" {
   region = "us-east-1"
-}`
+}
+```
 
 We defined the region in the variables.tf
 
-```variable "region" {
+```
+variable "region" {
   type    = string
   default = "us-east-2"
 }
 ```
 Then in the main.tf, we only use the variable region to define the region in which we are creating
 
-```provider "aws" {
+```
+provider "aws" {
   region = var.region
 }
 ```
