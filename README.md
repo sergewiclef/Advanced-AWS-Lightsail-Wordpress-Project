@@ -14,22 +14,22 @@ We will now proceed with the configuration. We will briefly explain code as we g
 
 We used variables for each component instead of directly defining values in the main.tf file. For example, instead of defining the AWS region in the main.tf as done in Part 1 as per below
 
-provider "aws" {
+`provider "aws" {
   region = "us-east-1"
-}
+}`
 
 We defined the region in the variables.tf
 
-variable "region" {
+`variable "region" {
   type    = string
   default = "us-east-2"
 }
-
+`
 Then in the main.tf, we only use the variable region to define the region in which we are creating
 
-provider "aws" {
+`provider "aws" {
   region = var.region
-}
+}`
 
 You can review all variables we created in the variables.tf file.
 
@@ -37,11 +37,11 @@ You can review all variables we created in the variables.tf file.
 
 First of all, we created a DNS zone to host our domain
 
-#Create a DNS zone
+`#Create a DNS zone
 resource "aws_route53_zone" "mywordpressexample_com" {
   name = var.blog_zone
 }
-
+`
 We then created the following DNS records to publish our domain on internet:
 
   - DNS A record for mywordpressexample.com
@@ -49,7 +49,7 @@ We then created the following DNS records to publish our domain on internet:
   - DNS AAA record for mywordpressexample.com
   - DNS AAA record for www.mywordpressexample.com
 
-# Create a dns record for the blog
+`# Create a dns record for the blog
 resource "aws_route53_record" "blog_record_example" {
   zone_id = aws_route53_zone.mywordpressexample_com.zone_id
   name = var.domain_name
@@ -88,7 +88,7 @@ resource "aws_route53_record" "blog_record_example_www_ipv6" {
   records = [aws_lightsail_instance.wordpress_instance.ipv6_addresses[0]]
 
 }
-
+`
 Note that the domain needs to be registered to be able to access the website using its domain name. 
 
 
