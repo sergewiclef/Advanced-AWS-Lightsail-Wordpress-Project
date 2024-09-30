@@ -12,13 +12,84 @@ We will now proceed with the configuration. We will briefly explain code as we g
 
 ### 1. Using variables when creating different components.
 
-We used variables for each component instead of directly defining values in the main.tf file. For example, we replaced the code below in the main.tf with the code below it from variables.tf
+We used variables for each component instead of directly defining values in the main.tf file. For example, instead of defining the AWS region in the main.tf as done in Part 1 as per below
 
-![image](https://github.com/user-attachments/assets/65390fda-5684-4f9e-a341-7aed46c3982d)
+provider "aws" {
+  region = "us-east-1"
+}
 
-![image](https://github.com/user-attachments/assets/2b896d2f-e5ac-48f2-9e53-1edc0f77cfda)
+We defined the region in the variables.tf
+
+variable "region" {
+  type    = string
+  default = "us-east-2"
+}
+
+Then in the main.tf, we only use the variable region to define the region in which we are creating
+
+provider "aws" {
+  region = var.region
+}
+
+You can review all variables we created in the variables.tf file.
 
 ### 2. Configure AWS Route 53 and SSL
+
+First of all, we created a DNS zone to host our domain
+
+#Create a DNS zone
+resource "aws_route53_zone" "mywordpressexample_com" {
+  name = var.blog_zone
+}
+
+We then created the following DNS records to publish our domain on internet:
+
+  - DNS A record for mywordpressexample.com
+  - DNS A record for www.mywordpressexample.com
+  - DNS AAA record for mywordpressexample.com
+  - DNS AAA record for www.mywordpressexample.com
+
+# Create a dns record for the blog
+resource "aws_route53_record" "blog_record_example" {
+  zone_id = aws_route53_zone.mywordpressexample_com.zone_id
+  name = var.domain_name
+  type = "A"
+  ttl = "300"
+  records = [aws_lightsail_instance.wordpress_instance.public_ip_address]
+
+}
+
+# Create a dns record for the blog - www
+resource "aws_route53_record" "blog_record_example_www" {
+  zone_id = aws_route53_zone.mywordpressexample_com.zone_id
+  name = var.domain_name_www
+  type = "A"
+  ttl = "300"
+  records = [aws_lightsail_instance.wordpress_instance.public_ip_address]
+
+}
+
+# Create ipv6 dns record for the blog
+resource "aws_route53_record" "blog_record_example_ipv6" {
+  zone_id = aws_route53_zone.mywordpressexample_com.zone_id
+  name = var.domain_name
+  type = "AAAA"
+  ttl = "300"
+  records = [aws_lightsail_instance.wordpress_instance.ipv6_addresses[0]]
+
+}
+
+# Create ipv6 dns record for the blog - www
+resource "aws_route53_record" "blog_record_example_www_ipv6" {
+  zone_id = aws_route53_zone.mywordpressexample_com.zone_id
+  name = var.domain_name_www
+  type = "AAAA"
+  ttl = "300"
+  records = [aws_lightsail_instance.wordpress_instance.ipv6_addresses[0]]
+
+}
+
+Note that the domain needs to be registered to be able to access the website using its domain name. 
 
 
 ### 3. Configure snapshot for data recovery
