@@ -1,12 +1,11 @@
 variable "region" {
   type    = string
-  default = "us-east-1"
+  default = "us-east-2"
 }
 
 variable "availability_zone" {
     type = string
-    default = "us-east-1a"
-  
+    default = "us-east-2a"
 }
 
 variable "instance" {
@@ -30,5 +29,25 @@ variable "bundle_id" {
   
 }
 
+variable "blog_zone" {
+    type = string
+    default = "mywordpressexample.com"
+  
+}
+
+variable "domain_name" {
+    type = string
+    default = "mywordpressexample.com"
+  }
+variable "domain_name_www" {
+    type = string
+    default = "www.mywordpressexample.com"
+  }
+
+variable "email" {
+  type = string
+  default = "sergewiclef@gmail.com"
+  
+}
 
 
